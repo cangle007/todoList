@@ -1,10 +1,13 @@
 $body-bg-color: black;
 $app-bg-color: #ef2155;
-$border-radius: 10px;
+$border-radius: 20px;
+$icon-radius: 50%;
+$submit-radius: 1px 30px 1px;
 $box-shadow-hover: 0 14px 28px rgba(192, 192, 192, 0.3),
   0 10px 10px rgba(192, 192, 192, 0.3);
 $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 $box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
 
 * {
   margin: 0;
@@ -33,14 +36,17 @@ body {
 // }
 
 .wrapper {
-  display: grid;
-  position: relative;
+  position: absolute;
   margin: auto;
-  height: 520px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   width: 350px;
+  height: 520px;
   padding: 20px;
-  background: $app-bg-color;
   border-radius: $border-radius;
+  background: $app-bg-color;
   box-shadow: $box-shadow-hover;
   .header {
     text-align: center;
@@ -51,7 +57,7 @@ body {
       height: 50px;
       display: inline-block;
       line-height: 50px;
-      border-radius: $border-radius;
+      border-radius: $icon-radius;
       box-shadow: $box-shadow;
       margin: 0 10px;
       background: white;
@@ -103,13 +109,138 @@ body {
       .fa-times {
         font-size: 1.5em;
         position: absolute;
-        right: 0px;
+        right: 15px;
         transform: translate(0, -0.1em);
         color: green;
         transition: $transition;
       }
       &-completed {
         text-decoration: line-through;
+      }
+    }
+    .todo-enter {
+      transform: translateX(-100%);
+      transition: all 750ms cubic-bezier(0.87, -0.41, 0.19, 1.44);
+    }
+
+    .todo-enter.todo-enter-active {
+      transform: translateX(0);
+    }
+
+    .todo-leave {
+      transform: translateX(0%);
+      transition: all 750ms cubic-bezier(0.87, -0.41, 0.19, 1.44);
+    }
+    .todo-leave.todo-leave-active {
+      transform: translateX(100%);
+    }
+  }
+  #AddTodo {
+    text-align: center;
+    margin-top: 1em;
+    input {
+      display: block;
+      border: 0;
+      background: white;
+      font-size: 1.2em;
+      padding: 0.5em;
+      width: 100%;
+      box-shadow: $box-shadow;
+      transition: $transition;
+      &:hover {
+        box-shadow: $box-shadow-hover;
+      }
+    }
+    button {
+      background: #1abc9c;
+      box-shadow: $box-shadow;
+      color: white;
+      border: none;
+      border-radius: $submit-radius;
+      width: 70px;
+      height: 70px;
+      font-size: 35px;
+      margin: 20px;
+      transition: $transition;
+      cursor: pointer;
+      text-shadow: $text-shadow;
+      &:hover {
+        box-shadow: $box-shadow-hover;
+      }
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.todo {
+  line-height: 1.5;
+  position: relative;
+  padding: 0 2.5rem 0 0.75rem;
+  transition: transform 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  &:after {
+    font-family: FontAwesome;
+    content: '\f00c';
+    position: absolute;
+    right: 0.75rem;
+    color: #2ecc71;
+    opacity: 0;
+    transform: scale(0);
+    transition: transform, opacity, 0.25s cubic-bezier(0.55, 0, 0.1, 1);
+  }
+  & + .todo {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    &:before {
+      content: '';
+      background: #e8ebed;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      border-radius: 2px;
+    }
+  }
+  &__content {
+    position: relative;
+    opacity: 1;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: opacity 0.25s ease-out;
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: calc(100% + 0.5em);
+      left: -0.25em;
+      height: 2px;
+      top: 50%;
+      border-radius: 1px;
+      background: #2e2e2e;
+      transform-origin: center right;
+      transform: scaleX(0);
+      transition: transform 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+    }
+  }
+  &.todo--completed {
+    &:after {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .todo__content {
+      opacity: 0.5;
+      &:after {
+        transform: scaleX(1);
+        transform-origin: center left;
       }
     }
   }

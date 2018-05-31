@@ -5,20 +5,18 @@ export default class TodoListComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      placeholder: 'plaeholder',
       showlist: 'DONT_SHOW_LIST',
       showactive: 'DONT_SHOW_ACTIVE',
       showcomplete: 'DONT_SHOW_COMPLETE',
-      completed: true,
-      todos: ['hello there', ' joker']
+      completed: false,
+      todosList: ['hello there', 'joker', 'wonderwoman'],
+      todosListCompleted: [],
+      userInput: ''
     };
   }
 
-  placeholderFunction = () => {
-    return this.state.placeholder;
-  };
-
-  showList = () => {
+  showList = event => {
+    event.preventDefault();
     let { showlist } = this.state;
     if (showlist === 'DONT_SHOW_LIST') {
       this.setState({ showlist: 'SHOW_LIST' });
@@ -27,7 +25,8 @@ export default class TodoListComponent extends Component {
     }
   };
 
-  showActive = () => {
+  showActive = event => {
+    event.preventDefault();
     let { showactive } = this.state;
     if (showactive === 'DONT_SHOW_ACTIVE') {
       this.setState({ showactive: 'SHOW_ACTIVE' });
@@ -36,7 +35,8 @@ export default class TodoListComponent extends Component {
     }
   };
 
-  showComplete = () => {
+  showComplete = event => {
+    event.preventDefault();
     let { showcomplete } = this.state;
     if (showcomplete === 'DONT_SHOW_COMPLETE') {
       this.setState({ showcomplete: 'SHOW_COMPLETE' });
@@ -45,15 +45,48 @@ export default class TodoListComponent extends Component {
     }
   };
 
+  handle_completed = event => {
+    event.preventDefault();
+    let { completed } = this.state;
+    if (completed === false) {
+      this.setState({ completed: true });
+    } else {
+      this.setState({ completed: false });
+    }
+  };
+
+  deleteTodoList = (event, data) => {
+    event.preventDefault();
+    let { todosList } = this.state;
+    let deleteListId = Number(event.target.id);
+
+    todosList.splice(deleteListId, 1);
+  };
+
+  handle_AddToLIst = event => {
+    event.preventDefault();
+    let { todosList, userInput } = this.state;
+    let updated = todosList.slice(0);
+    updated.push(userInput);
+
+    this.setState({ todosList: [...updated], userInput: '' });
+  };
+
+  handle_UserInput = event => {
+    event.preventDefault();
+    this.setState({ userInput: event.target.value });
+  };
+
   render() {
     let {
       showlist,
       showactive,
       showcomplete,
-      showtodos,
-      todos,
+      todosList,
+      userInput,
       completed
     } = this.state;
+
     return (
       <div className="container">
         <div />
@@ -76,21 +109,39 @@ export default class TodoListComponent extends Component {
               transitionName="todo"
               transitionEnterTimeout={500}
               transitionLeaveTimeout={500}>
-              {todos.map(todo => (
-                <li className={'todo' + (completed ? ' todo-completed' : '')}>
+              {todosList.map((todo, i) => (
+                <li
+                  key={i}
+                  onClick={this.handle_completed}
+                  className={'todo' + (completed ? ' todo-completed' : '')}>
                   <i
                     className={
-                      'fa ' + (completed ? 'fa-dot-circle-o' : 'fa-circle-o')
+                      'fa ' +
+                      (completed ? 'fa fa-check-circle' : 'fa fa-circle')
                     }
                   />
                   {todo}
-
-                  <i className="fa fa-times" />
+                  <i
+                    id={i}
+                    onClick={this.deleteTodoList}
+                    className="fa fa-times"
+                  />
                 </li>
               ))}
             </ReactCSSTransitionGroup>
           </div>
-          <div className="userInput">userInput</div>
+
+          <form id="AddTodo" className="userInput">
+            <input
+              type="text"
+              value={userInput}
+              placeholder="input..."
+              onChange={this.handle_UserInput}
+            />
+            <button type="submit" onClick={this.handle_AddToLIst}>
+              <i className="fa fa-plus" />
+            </button>
+          </form>
         </div>
         <div />
       </div>
