@@ -1,0 +1,116 @@
+$body-bg-color: black;
+$app-bg-color: #ef2155;
+$border-radius: 10px;
+$box-shadow-hover: 0 14px 28px rgba(192, 192, 192, 0.3),
+  0 10px 10px rgba(192, 192, 192, 0.3);
+$transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+$box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  background: $body-bg-color;
+  color: white;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 0.5fr auto 0.5fr;
+  //grid-gap: 50px;
+  color: white;
+  height: 1000px;
+}
+
+// .header {
+//   border: 1px solid white;
+// }
+
+.wrapper {
+  display: grid;
+  position: relative;
+  margin: auto;
+  height: 520px;
+  width: 350px;
+  padding: 20px;
+  background: $app-bg-color;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-hover;
+  .header {
+    text-align: center;
+    border-bottom: 3px solid darken($app-bg-color, 15%);
+    padding: 1em;
+    a {
+      width: 50px;
+      height: 50px;
+      display: inline-block;
+      line-height: 50px;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      margin: 0 10px;
+      background: white;
+      cursor: pointer;
+      &:hover {
+        box-shadow: $box-shadow-hover;
+      }
+    }
+    #SHOW_LIST,
+    #SHOW_ACTIVE,
+    #SHOW_COMPLETE {
+      background: blue;
+      opacity: 0.7;
+      transition: $transition;
+      cursor: pointer;
+      &:hover {
+        box-shadow: $box-shadow-hover;
+      }
+    }
+  }
+
+  #TodoList {
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    list-style: none;
+    color: black;
+    border-bottom: 3px solid darken($app-bg-color, 15%);
+    .todo {
+      background: white;
+      padding: 10px;
+      margin: 10px 0;
+      box-shadow: $box-shadow;
+      transition: $transition;
+      cursor: pointer;
+      &:hover {
+        box-shadow: $box-shadow-hover;
+      }
+      &:after {
+        content: '';
+        position: relative;
+        width: 100%;
+        border-bottom: 5px solid black;
+        height: 5px;
+      }
+      i {
+        margin-right: 10px;
+      }
+      .fa-times {
+        font-size: 1.5em;
+        position: absolute;
+        right: 0px;
+        transform: translate(0, -0.1em);
+        color: green;
+        transition: $transition;
+      }
+      &-completed {
+        text-decoration: line-through;
+      }
+    }
+  }
+}
