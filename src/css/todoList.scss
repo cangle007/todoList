@@ -26,14 +26,9 @@ body {
 .container {
   display: grid;
   grid-template-columns: 0.5fr auto 0.5fr;
-  //grid-gap: 50px;
   color: white;
   height: 1000px;
 }
-
-// .header {
-//   border: 1px solid white;
-// }
 
 .wrapper {
   position: absolute;
@@ -60,7 +55,8 @@ body {
       border-radius: $icon-radius;
       box-shadow: $box-shadow;
       margin: 0 10px;
-      background: white;
+      background: black;
+      color: white;
       cursor: pointer;
       &:hover {
         box-shadow: $box-shadow-hover;
@@ -69,8 +65,9 @@ body {
     #SHOW_LIST,
     #SHOW_ACTIVE,
     #SHOW_COMPLETE {
-      background: blue;
-      opacity: 0.7;
+      background: #1abc9c;
+      //opacity: 0.7;
+      text-shadow: $text-shadow;
       transition: $transition;
       cursor: pointer;
       &:hover {
@@ -84,6 +81,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     list-style: none;
+    //text-shadow: $text-shadow;
     color: black;
     border-bottom: 3px solid darken($app-bg-color, 15%);
     .todo {
@@ -111,7 +109,7 @@ body {
         position: absolute;
         right: 15px;
         transform: translate(0, -0.1em);
-        color: green;
+        color: red;
         transition: $transition;
       }
       &-completed {
@@ -152,18 +150,23 @@ body {
       }
     }
     button {
-      background: #1abc9c;
+      background: black;
       box-shadow: $box-shadow;
       color: white;
       border: none;
       border-radius: $submit-radius;
+      border-bottom: 15px solid #97bf0d;
+      border-left: 15px solid #f8b334;
+      border-top: 15px solid #93a6a8;
+      border-right: 15px solid #1abc9c;
+      // border-right: 20px solid #cb2025;
       width: 70px;
       height: 70px;
       font-size: 35px;
       margin: 20px;
       transition: $transition;
-      cursor: pointer;
       text-shadow: $text-shadow;
+      cursor: pointer;
       &:hover {
         box-shadow: $box-shadow-hover;
       }
