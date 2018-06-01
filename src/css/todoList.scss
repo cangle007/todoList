@@ -1,8 +1,8 @@
 $body-bg-color: black;
 $app-bg-color: #ef2155;
-$border-radius: 20px;
+$border-radius: 1px 60px 1px;
 $icon-radius: 50%;
-$submit-radius: 1px 30px 1px;
+$submitButton-radius: 1px 30px 1px;
 $box-shadow-hover: 0 14px 28px rgba(192, 192, 192, 0.3),
   0 10px 10px rgba(192, 192, 192, 0.3);
 $transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -47,7 +47,7 @@ body {
     text-align: center;
     border-bottom: 3px solid darken($app-bg-color, 15%);
     padding: 1em;
-    a {
+    span {
       width: 50px;
       height: 50px;
       display: inline-block;
@@ -66,7 +66,6 @@ body {
     #SHOW_ACTIVE,
     #SHOW_COMPLETE {
       background: #1abc9c;
-      //opacity: 0.7;
       text-shadow: $text-shadow;
       transition: $transition;
       cursor: pointer;
@@ -81,7 +80,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     list-style: none;
-    //text-shadow: $text-shadow;
+    text-shadow: $text-shadow;
     color: black;
     border-bottom: 3px solid darken($app-bg-color, 15%);
     .todo {
@@ -154,12 +153,11 @@ body {
       box-shadow: $box-shadow;
       color: white;
       border: none;
-      border-radius: $submit-radius;
+      border-radius: $submitButton-radius;
       border-bottom: 15px solid #97bf0d;
       border-left: 15px solid #f8b334;
       border-top: 15px solid #93a6a8;
       border-right: 15px solid #1abc9c;
-      // border-right: 20px solid #cb2025;
       width: 70px;
       height: 70px;
       font-size: 35px;

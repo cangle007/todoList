@@ -9,42 +9,33 @@ export default class TodoListComponent extends Component {
       showactive: 'DONT_SHOW_ACTIVE',
       showcomplete: 'DONT_SHOW_COMPLETE',
       todosList: [
-        { todo: 'kool', completed: false },
-        { todo: 'whtsup', completed: true },
-        { todo: 'getAjob', completed: false }
+        { todo: 'The Snake', completed: false },
+        { todo: 'is', completed: true },
+        { todo: 'Kevin Duran', completed: false }
       ],
       displayTodosList: [
-        { todo: 'kool', completed: false },
-        { todo: 'whtsup', completed: true },
-        { todo: 'getAjob', completed: false }
+        { todo: 'The Snake', completed: false },
+        { todo: 'is', completed: true },
+        { todo: 'Kevin Duran', completed: false }
       ],
       userInput: ''
     };
   }
 
-  // { todo: 'kool', completed: false },
-  // { todo: 'whtsup', completed: true },
-  // { todo: 'getAjob', completed: false }
   showList = event => {
     event.preventDefault();
-    let { showlist, todosList } = this.state;
+    let { todosList } = this.state;
     this.setState({
       displayTodosList: [...todosList],
       showlist: 'SHOW_LIST',
       showactive: 'DONT_SHOW_ACTIVE',
       showcomplete: 'DONT_SHOW_COMPLETE'
     });
-
-    // if (showlist === 'DONT_SHOW_LIST') {
-    //   this.setState({ showlist: 'SHOW_LIST' });
-    // } else {
-    //   this.setState({ showlist: 'DONT_SHOW_LIST' });
-    // }
   };
 
   showActive = event => {
     event.preventDefault();
-    let { showactive, todosList, displayTodosList } = this.state;
+    let { todosList } = this.state;
 
     let filtered = todosList.filter(obj => {
       return obj.completed === false;
@@ -56,17 +47,11 @@ export default class TodoListComponent extends Component {
       showcomplete: 'DONT_SHOW_COMPLETE',
       showlist: 'DONT_SHOW_LIST'
     });
-
-    // if (showactive === 'DONT_SHOW_ACTIVE') {
-    //   this.setState({ showactive: 'SHOW_ACTIVE' });
-    // } else {
-    //   this.setState({ showactive: 'DONT_SHOW_ACTIVE' });
-    // }
   };
 
   showComplete = event => {
     event.preventDefault();
-    let { showcomplete, todosList, displayTodosList } = this.state;
+    let { todosList } = this.state;
     let filtered = todosList.filter(obj => {
       return obj.completed === true;
     });
@@ -74,22 +59,17 @@ export default class TodoListComponent extends Component {
     this.setState({
       displayTodosList: [...filtered],
       showcomplete: 'SHOW_COMPLETE',
-      showactive: 'DONT_SHOW_ACTIVE'
+      showactive: 'DONT_SHOW_ACTIVE',
+      showlist: 'DONT_SHOW_LIST'
     });
-
-    // if (showcomplete === 'DONT_SHOW_COMPLETE') {
-    //   this.setState({ showcomplete: 'SHOW_COMPLETE' });
-    // } else {
-    //   this.setState({ showcomplete: 'DONT_SHOW_COMPLETE' });
-    // }
   };
 
   handle_completed = event => {
     event.preventDefault();
-    let { todosList } = this.state;
+    let { displayTodosList } = this.state;
     let id = Number(event.target.id);
 
-    let updated = todosList.map((obj, i) => {
+    let updated = displayTodosList.map((obj, i) => {
       if (i === id && obj.completed === false) {
         obj.completed = true;
       } else if (i === id && obj.completed === true) {
@@ -97,20 +77,21 @@ export default class TodoListComponent extends Component {
       }
       return obj;
     });
-    this.setState({ todosList: [...updated] });
+    this.setState({ todosList: [...updated], displayTodosList: [...updated] });
   };
 
   handle_deleteTodoList = (event, data) => {
     event.preventDefault();
-    let { todosList } = this.state;
+    let { todosList, displayTodosList } = this.state;
     let id = Number(event.target.id);
 
-    for (let i = 0; i < todosList.length; i++) {
+    for (let i = 0; i < displayTodosList.length; i++) {
       if (id === i) {
         todosList.splice(id, 1);
+        displayTodosList.splice(id, 1);
       }
     }
-    this.setState({ todosList: todosList });
+    this.setState({ todosList: todosList, displayTodosList: displayTodosList });
   };
 
   handle_AddTodoList = event => {
@@ -122,6 +103,7 @@ export default class TodoListComponent extends Component {
 
     updatedTodosList.push(obj);
     updatedDisplayTodosList.push(obj);
+
     this.setState({
       todosList: [...updatedTodosList],
       displayTodosList: [...updatedDisplayTodosList],
@@ -139,25 +121,23 @@ export default class TodoListComponent extends Component {
       showlist,
       showactive,
       showcomplete,
-      todosList,
       displayTodosList,
       userInput
     } = this.state;
-
     return (
       <div className="container">
         <div />
         <div className="wrapper">
           <div className="header">
-            <a href="#" id={showlist} onClick={this.showList}>
-              <div className="fa fa-list" />
-            </a>
-            <a href="#" id={showactive} onClick={this.showActive}>
-              <div className="fa fa-circle" />
-            </a>
-            <a href="#" id={showcomplete} onClick={this.showComplete}>
-              <div className="fa fa-check-circle" />
-            </a>
+            <span id={showlist} onClick={this.showList}>
+              <i className="fa fa-list" />
+            </span>
+            <span id={showactive} onClick={this.showActive}>
+              <i className="fa fa-circle" />
+            </span>
+            <span id={showcomplete} onClick={this.showComplete}>
+              <i className="fa fa-check-circle" />
+            </span>
           </div>
           <div className="visibleTodoList">
             <ReactCSSTransitionGroup
